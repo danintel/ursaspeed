@@ -13,29 +13,89 @@ In the future, I may add tests for signing and signature verification.
 
 ## Prerequisites
 This benchmark assumes the ursa repository is installed and built in the parent library, `../ursa`. To download and build, type:
-
+```
 git clone https://github.com/hyperledger/ursa
 cd ursa/libursa
 cargo build --release
-
+```
 This builds libursa.so in "secure" mode (with C/Rust optimizations).
 For more information on Ursa, see
 https://github.com/hyperledger/ursa/blob/master/README.md
 and
 https://www.hyperledger.org/projects/ursa
 
+Ursa, in turn, currently requires libsodium.  To install, type
+```
+apt install libsodium-dev
+```
 
-## Usage
+
+## Building
 
 To build and run, type
 ```
 cargo build
 ```
+
+## Running
+
 To run the libursa and openssl microbenchmarks, type:
 ```
 target/debug/crypto-speed
-openssl speed
-cpuid |egrep -i 'brand =|avx:|avx2:|avx512f:'
+openssl speed sha256 sha512
+cpuid | egrep -i 'brand =|avx:|avx2:|avx512f:' | sort -u
+```
+
+To display usage, type:
+```
+$ target/debug/crypto-speed -h
+Crypto Speed Microbenchmark Tool. 0.1.0
+Dan Anderson, Intel Corporation.
+Run and display crypto microbenchmark.
+
+EXAMPLES:
+    crypto-speed sha512/openssl
+    crypto-speed \\*/openssl
+    crypto-speed -m sha512/\\*
+    crypto-speed
+
+USAGE:
+    crypto-speed [FLAGS] [RegExp]
+
+FLAGS:
+    -h, --help       Prints help information
+    -m, --machine    Display machine-readable output
+    -V, --version    Prints version information
+
+ARGS:
+    <RegExp>    Regular Expression to match algorithm/crate
+$ 
+```
+
+To display usage, type:
+```
+$ target/debug/crypto-speed -h
+Crypto Speed Microbenchmark Tool. 0.1.0
+Dan Anderson, Intel Corporation.
+Run and display crypto microbenchmark.
+
+EXAMPLES:
+    crypto-speed sha512/openssl
+    crypto-speed \\*/openssl
+    crypto-speed -m sha512/\\*
+    crypto-speed
+
+USAGE:
+    crypto-speed [FLAGS] [RegExp]
+
+FLAGS:
+    -h, --help       Prints help information
+    -m, --machine    Display machine-readable output
+    -V, --version    Prints version information
+
+ARGS:
+    <RegExp>    Regular Expression to match algorithm/crate
+$ 
 ```
 
 
@@ -44,13 +104,8 @@ This software is Apache 2.0 licensed and accepts contributions via
 [GitHub](https://github.com/danintel/sawtooth-faq) pull requests.
 Each commit must include a `Signed-off-by:` in the commit message (`git commit -s`). This sign-off means you agree the commit satisfies the [Developer Certificate of Origin (DCO).](https://developercertificate.org/)
 
-This example software is derived from the
-[Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
-application.
-Simplewallet supports more programming languages and handles transactions with multiple keys.
-
 ## License
-This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
+This Hyperledger Ursa software are licensed under the [Apache License Version 2.0](LICENSE) software license.
 
 © Copyright 2019, Intel Corporation.
 

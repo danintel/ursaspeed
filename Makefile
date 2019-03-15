@@ -12,7 +12,8 @@ run:	test
 
 test:
 	target/debug/crypto-speed
-	cpuid |egrep -i 'brand =|avx:|avx2:|avx512f:'
+	openssl speed sha256 sha512
+	cpuid | egrep -i 'brand =|avx:|avx2:|avx512f:' | sort -u
 
 machine:
 	target/debug/crypto-speed -m
