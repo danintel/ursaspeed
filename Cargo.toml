@@ -1,0 +1,18 @@
+[package]
+name = "crypto-speed"
+version = "0.1.0"
+authors = ["Dan Anderson, Intel Corporation"]
+
+[dependencies]
+rustc_version = "0.2"
+os_type = "2.2"
+chrono = "0.4"
+clap = "2.32"
+regex = "1.1"
+sha2 = "0.8"
+openssl = "0.10"
+ring = "0.14"
+amcl = "0.2"
+hashlib = "0.1"
+#ursa = "0.1"
+ursa = { path = "../ursa/libursa" }
