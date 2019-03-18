@@ -265,72 +265,72 @@ fn main() {
     // Crate ring
     let mut ring_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut ring_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "ring/sha256") {
-        run_speed_test(&"ring/sha256", &sha256_ring, 3, machine_output,
+    if arg_match(regexp, "sha256/ring") {
+        run_speed_test(&"sha256/ring", &sha256_ring, 3, machine_output,
             ring_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "ring/sha512") {
-        run_speed_test(&"ring/sha512", &sha512_ring, 3, machine_output,
+    if arg_match(regexp, "sha512/ring") {
+        run_speed_test(&"sha512/ring", &sha512_ring, 3, machine_output,
             ring_sha512_buf.as_mut_slice());
     }
 
     // Crate sha2
     let mut sha2_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut sha2_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "sha2/sha256") {
-        run_speed_test(&"sha2/sha256", &sha256_sha2, 3, machine_output,
+    if arg_match(regexp, "sha256/sha2") {
+        run_speed_test(&"sha256/sha2", &sha256_sha2, 3, machine_output,
             sha2_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "sha2/sha512") {
-        run_speed_test(&"sha2/sha512", &sha512_sha2, 3, machine_output,
+    if arg_match(regexp, "sha512/sha2") {
+        run_speed_test(&"sha512/sha2", &sha512_sha2, 3, machine_output,
             sha2_sha512_buf.as_mut_slice());
     }
 
     // Crate openssl
     let mut openssl_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut openssl_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "openssl/sha256") {
-        run_speed_test(&"openssl/sha256", &sha256_openssl, 3, machine_output,
+    if arg_match(regexp, "sha256/openssl") {
+        run_speed_test(&"sha256/openssl", &sha256_openssl, 3, machine_output,
             openssl_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "openssl/sha512") {
-        run_speed_test(&"openssl/sha512", &sha512_openssl, 3, machine_output,
+    if arg_match(regexp, "sha512/openssl") {
+        run_speed_test(&"sha512/openssl", &sha512_openssl, 3, machine_output,
             openssl_sha512_buf.as_mut_slice());
     }
 
     // Crate amcl
     let mut amcl_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut amcl_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "amcl/sha256") {
-        run_speed_test(&"amcl/sha256", &sha256_amcl, 3, machine_output,
+    if arg_match(regexp, "sha256/amcl") {
+        run_speed_test(&"sha256/amcl", &sha256_amcl, 3, machine_output,
             amcl_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "amcl/sha512") {
-        run_speed_test(&"amcl/sha512", &sha512_amcl, 3, machine_output,
+    if arg_match(regexp, "sha512/amcl") {
+        run_speed_test(&"sha512/amcl", &sha512_amcl, 3, machine_output,
             amcl_sha512_buf.as_mut_slice());
     }
 
     // Crate hashlib
     let mut hashlib_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut hashlib_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "hashlib/sha256") {
-        run_speed_test(&"hashlib/sha256", &sha256_hashlib, 3, machine_output,
+    if arg_match(regexp, "sha256/hashlib") {
+        run_speed_test(&"sha256/hashlib", &sha256_hashlib, 3, machine_output,
             hashlib_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "hashlib/sha512") {
-        run_speed_test(&"hashlib/sha512", &sha512_hashlib, 3, machine_output,
+    if arg_match(regexp, "sha512/hashlib") {
+        run_speed_test(&"sha512/hashlib", &sha512_hashlib, 3, machine_output,
             hashlib_sha512_buf.as_mut_slice());
     }
 
     // Crate ursa
     let mut ursa_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut ursa_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "ursa/sha256") {
-        run_speed_test(&"ursa/sha256", &sha256_ursa, 3, machine_output,
+    if arg_match(regexp, "sha256/ursa") {
+        run_speed_test(&"sha256/ursa", &sha256_ursa, 3, machine_output,
             ursa_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "ursa/sha512") {
-        run_speed_test(&"ursa/sha512", &sha512_ursa, 3, machine_output,
+    if arg_match(regexp, "sha512/ursa") {
+        run_speed_test(&"sha512/ursa", &sha512_ursa, 3, machine_output,
             ursa_sha512_buf.as_mut_slice());
     }
 
@@ -345,62 +345,62 @@ fn main() {
     // XXX make macros
 
     // Crate ring
-    if arg_match(regexp, "ring/sha256") {
+    if arg_match(regexp, "sha256/ring") {
         print_speed_test_results(&"sha256/ring", time_now, machine_output,
             ring_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "ring/sha512") {
+    if arg_match(regexp, "sha512/ring") {
         print_speed_test_results(&"sha512/ring", time_now, machine_output,
             ring_sha512_buf.as_mut_slice());
     }
 
     // Crate openssl
-    if arg_match(regexp, "openssl/sha256") {
+    if arg_match(regexp, "sha256/openssl") {
         print_speed_test_results(&"sha256/openssl", time_now, machine_output,
             openssl_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "openssl/sha512") {
+    if arg_match(regexp, "sha512/openssl") {
         print_speed_test_results(&"sha512/openssl", time_now, machine_output,
             openssl_sha512_buf.as_mut_slice());
     }
 
     // Crate sha2
-    if arg_match(regexp, "sha2/sha256") {
+    if arg_match(regexp, "sha256/sha2") {
         print_speed_test_results(&"sha256/sha2", time_now, machine_output,
             sha2_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "sha2/sha512") {
+    if arg_match(regexp, "sha512/sha2") {
         print_speed_test_results(&"sha512/sha2", time_now, machine_output,
             sha2_sha512_buf.as_mut_slice());
     }
 
     // Crate amcl
-    if arg_match(regexp, "amcl/sha256") {
-        print_speed_test_results(&"amcl/sha256", time_now, machine_output,
+    if arg_match(regexp, "sha256/amcl") {
+        print_speed_test_results(&"sha256/amcl", time_now, machine_output,
             amcl_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "amcl/sha512") {
-        print_speed_test_results(&"amcl/sha512", time_now, machine_output,
+    if arg_match(regexp, "sha512/amcl") {
+        print_speed_test_results(&"sha512/amcl", time_now, machine_output,
             amcl_sha512_buf.as_mut_slice());
     }
 
     // Crate hashlib
-    if arg_match(regexp, "hashlib/sha256") {
-        print_speed_test_results(&"hashlib/sha256", time_now, machine_output,
+    if arg_match(regexp, "sha256/hashlib") {
+        print_speed_test_results(&"sha256/hashlib", time_now, machine_output,
             hashlib_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "hashlib/sha512") {
-        print_speed_test_results(&"hashlib/sha512", time_now, machine_output,
+    if arg_match(regexp, "sha512/hashlib") {
+        print_speed_test_results(&"sha512/hashlib", time_now, machine_output,
             hashlib_sha512_buf.as_mut_slice());
     }
 
     // Crate ursa
-    if arg_match(regexp, "ursa/sha256") {
-        print_speed_test_results(&"ursa/sha256", time_now, machine_output,
+    if arg_match(regexp, "sha256/ursa") {
+        print_speed_test_results(&"sha256/ursa", time_now, machine_output,
             ursa_sha256_buf.as_mut_slice());
     }
-    if arg_match(regexp, "ursa/sha512") {
-        print_speed_test_results(&"ursa/sha512", time_now, machine_output,
+    if arg_match(regexp, "sha512/ursa") {
+        print_speed_test_results(&"sha512/ursa", time_now, machine_output,
             ursa_sha512_buf.as_mut_slice());
     }
 }
