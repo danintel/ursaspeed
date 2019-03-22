@@ -27,13 +27,12 @@ use regex::Regex;
 
 // Hash crates
 // XXX: remove use ???
-use sha2::{Sha256, Sha512, Digest as Sha2Digest};
+use sha2::{Digest as Sha2Digest};
 use openssl::hash::{Hasher, MessageDigest};
 use ring::digest::{Context, SHA256, SHA512};
+use hashlib::prelude::HashAlgoKernel;
 use amcl::hash256::HASH256;
 use amcl::hash512::HASH512;
-use ursa::hash::{digest, DigestAlgorithm};
-
 
 // Crate ring
 fn sha256_ring(byte_len: usize, data: [u8; 16384]) {
@@ -61,14 +60,10 @@ fn sha512_openssl(byte_len: usize, data: [u8; 16384]) {
 
 // Crate sha2
 fn sha256_sha2(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Sha256::new();
-    h.input(&data[..byte_len]);
-    h.result();
+    sha2::Sha256::digest(&data[..byte_len]);
 }
 fn sha512_sha2(byte_len: usize, data: [u8; 16384]) {
-    let mut sha2hash = Sha512::new();
-    sha2hash.input(&data[..byte_len]);
-    sha2hash.result();
+    sha2::Sha512::digest(&data[..byte_len]);
 }
 
 // Crate amcl
@@ -85,22 +80,23 @@ fn sha512_amcl(byte_len: usize, data: [u8; 16384]) {
 
 // Crate hashlib
 fn sha256_hashlib(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Sha256::new();
-    let _ = h.input(&data[..byte_len]);
-    h.result();
+    let mut h = hashlib::sha2::Sha256::new(hashlib::sha2::Sha2Option{});
+    let _ = h.update(&data[..byte_len]);
+    h.finalize().unwrap();
+
 }
 fn sha512_hashlib(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Sha512::new();
-    let _ = h.input(&data[..byte_len]);
-    h.result();
+    let mut h = hashlib::sha2::Sha512::new(hashlib::sha2::Sha2Option{});
+    let _ = h.update(&data[..byte_len]);
+    h.finalize().unwrap();
 }
 
 // Crate ursa
 fn sha256_ursa(byte_len: usize, data: [u8; 16384]) {
-    let _ = digest(DigestAlgorithm::Sha2_256, &data[..byte_len]).unwrap();
+    ursa::sha2::Sha256::digest(&data[..byte_len]);
 }
 fn sha512_ursa(byte_len: usize, data: [u8; 16384]) {
-    let _ = digest(DigestAlgorithm::Sha2_512, &data[..byte_len]).unwrap();
+    ursa::sha2::Sha512::digest(&data[..byte_len]);
 }
 
 

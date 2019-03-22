@@ -15,5 +15,4 @@ openssl = "0.10"
 ring = "0.14"
 amcl = "0.2"
 hashlib = "0.1"
-#ursa = "0.1"
-ursa = { path = "../ursa/libursa" }
+ursa = "0.1"
