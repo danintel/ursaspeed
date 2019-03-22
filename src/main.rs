@@ -39,50 +39,60 @@ use ursa::hash::{digest, DigestAlgorithm};
 fn sha256_ring(byte_len: usize, data: [u8; 16384]) {
     let mut h = Context::new(&SHA256);
     let _ = h.update(&data[..byte_len]);
+    h.finish();
 }
 fn sha512_ring(byte_len: usize, data: [u8; 16384]) {
     let mut h = Context::new(&SHA512);
     let _ = h.update(&data[..byte_len]);
+    h.finish();
 }
 
 // Crate openssl
 fn sha256_openssl(byte_len: usize, data: [u8; 16384]) {
     let mut h = Hasher::new(MessageDigest::sha256()).unwrap();
     let _ = h.update(&data[..byte_len]);
+    h.finish().unwrap();
 }
 fn sha512_openssl(byte_len: usize, data: [u8; 16384]) {
     let mut h = Hasher::new(MessageDigest::sha512()).unwrap();
     let _ = h.update(&data[..byte_len]);
+    h.finish().unwrap();
 }
 
 // Crate sha2
 fn sha256_sha2(byte_len: usize, data: [u8; 16384]) {
     let mut h = Sha256::new();
     h.input(&data[..byte_len]);
+    h.result();
 }
 fn sha512_sha2(byte_len: usize, data: [u8; 16384]) {
     let mut sha2hash = Sha512::new();
     sha2hash.input(&data[..byte_len]);
+    sha2hash.result();
 }
 
 // Crate amcl
 fn sha256_amcl(byte_len: usize, data: [u8; 16384]) {
     let mut h = HASH256::new();
     h.process_array(&data[..byte_len]);
+    h.hash();
 }
 fn sha512_amcl(byte_len: usize, data: [u8; 16384]) {
     let mut h = HASH512::new();
     h.process_array(&data[..byte_len]);
+    h.hash();
 }
 
 // Crate hashlib
 fn sha256_hashlib(byte_len: usize, data: [u8; 16384]) {
     let mut h = Sha256::new();
     let _ = h.input(&data[..byte_len]);
+    h.result();
 }
 fn sha512_hashlib(byte_len: usize, data: [u8; 16384]) {
     let mut h = Sha512::new();
     let _ = h.input(&data[..byte_len]);
+    h.result();
 }
 
 // Crate ursa

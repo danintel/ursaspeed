@@ -15,6 +15,8 @@ In the future, I may add tests for signing and signature verification.
 This benchmark assumes the ursa repository is installed and built in the parent library, `../ursa`. To download and build, type:
 ```
 git clone https://github.com/hyperledger/ursa
+# Since Ursa API has changed, the code works with commit d7ac9e92d4f76cd2b68c974031e4e894200dc4bf
+git checkout d7ac9e92d4f76cd2b68c974031e4e894200dc4bf
 cd ursa/libursa
 cargo build --release
 ```
