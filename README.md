@@ -36,7 +36,7 @@ apt install libsodium-dev
 
 To build and run, type
 ```
-cargo build
+cargo build --release
 ```
 
 ## Running
