@@ -1,6 +1,6 @@
 // Crypto speed microbenchmark program
 // Dan Anderson
-// © Copyright 2018, Intel Corporation.
+// Copyright ©  2019, Intel Corporation.
 
 extern crate chrono;
 extern crate clap;
@@ -20,42 +20,28 @@ extern crate ursa;
 use std::io::{self, Write};
 use chrono::{DateTime, Utc};
 use clap::{App, Arg};
-//use os_type::current_platform;
 use rustc_version::{version, version_meta, Channel};
 use std::time::{Duration, Instant};
 use regex::Regex;
 
 // Hash crates
-// XXX: remove use ???
-use sha2::{Digest as Sha2Digest};
-use openssl::hash::{Hasher, MessageDigest};
-use ring::digest::{Context, SHA256, SHA512};
+use sha2::Digest; // or: use ursa::Digest;
 use hashlib::prelude::HashAlgoKernel;
-use amcl::hash256::HASH256;
-use amcl::hash512::HASH512;
 
 // Crate ring
 fn sha256_ring(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Context::new(&SHA256);
-    let _ = h.update(&data[..byte_len]);
-    h.finish();
+    ring::digest::digest(&ring::digest::SHA256, &data[..byte_len]);
 }
 fn sha512_ring(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Context::new(&SHA512);
-    let _ = h.update(&data[..byte_len]);
-    h.finish();
+    ring::digest::digest(&ring::digest::SHA256, &data[..byte_len]);
 }
 
 // Crate openssl
 fn sha256_openssl(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Hasher::new(MessageDigest::sha256()).unwrap();
-    let _ = h.update(&data[..byte_len]);
-    h.finish().unwrap();
+    openssl::sha::sha256(&data[..byte_len]);
 }
 fn sha512_openssl(byte_len: usize, data: [u8; 16384]) {
-    let mut h = Hasher::new(MessageDigest::sha512()).unwrap();
-    let _ = h.update(&data[..byte_len]);
-    h.finish().unwrap();
+    openssl::sha::sha512(&data[..byte_len]);
 }
 
 // Crate sha2
@@ -68,12 +54,13 @@ fn sha512_sha2(byte_len: usize, data: [u8; 16384]) {
 
 // Crate amcl
 fn sha256_amcl(byte_len: usize, data: [u8; 16384]) {
-    let mut h = HASH256::new();
+    let mut h = amcl::hash256::HASH256::new();
     h.process_array(&data[..byte_len]);
     h.hash();
 }
 fn sha512_amcl(byte_len: usize, data: [u8; 16384]) {
-    let mut h = HASH512::new();
+    let mut h = amcl::hash512::HASH512::new();
+    //let mut h = HASH512::new();
     h.process_array(&data[..byte_len]);
     h.hash();
 }
@@ -83,8 +70,8 @@ fn sha256_hashlib(byte_len: usize, data: [u8; 16384]) {
     let mut h = hashlib::sha2::Sha256::new(hashlib::sha2::Sha2Option{});
     let _ = h.update(&data[..byte_len]);
     h.finalize().unwrap();
-
 }
+
 fn sha512_hashlib(byte_len: usize, data: [u8; 16384]) {
     let mut h = hashlib::sha2::Sha512::new(hashlib::sha2::Sha2Option{});
     let _ = h.update(&data[..byte_len]);
@@ -266,7 +253,6 @@ fn main() {
 
 
     // Run tests for each algorithm/crate
-    // XXX make macros
 
     // Crate ring
     let mut ring_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
@@ -280,18 +266,6 @@ fn main() {
             ring_sha512_buf.as_mut_slice());
     }
 
-    // Crate sha2
-    let mut sha2_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    let mut sha2_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
-    if arg_match(regexp, "sha256/sha2") {
-        run_speed_test(&"sha256/sha2", &sha256_sha2, 3, machine_output,
-            sha2_sha256_buf.as_mut_slice());
-    }
-    if arg_match(regexp, "sha512/sha2") {
-        run_speed_test(&"sha512/sha2", &sha512_sha2, 3, machine_output,
-            sha2_sha512_buf.as_mut_slice());
-    }
-
     // Crate openssl
     let mut openssl_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
     let mut openssl_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
@@ -302,6 +276,18 @@ fn main() {
     if arg_match(regexp, "sha512/openssl") {
         run_speed_test(&"sha512/openssl", &sha512_openssl, 3, machine_output,
             openssl_sha512_buf.as_mut_slice());
+    }
+
+    // Crate sha2
+    let mut sha2_sha256_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
+    let mut sha2_sha512_buf = vec![0f64, 0f64, 0f64, 0f64, 0f64, 0f64];
+    if arg_match(regexp, "sha256/sha2") {
+        run_speed_test(&"sha256/sha2", &sha256_sha2, 3, machine_output,
+            sha2_sha256_buf.as_mut_slice());
+    }
+    if arg_match(regexp, "sha512/sha2") {
+        run_speed_test(&"sha512/sha2", &sha512_sha2, 3, machine_output,
+            sha2_sha512_buf.as_mut_slice());
     }
 
     // Crate amcl
@@ -348,7 +334,6 @@ fn main() {
     }
 
     // Print results for each algorithm/crate
-    // XXX make macros
 
     // Crate ring
     if arg_match(regexp, "sha256/ring") {
